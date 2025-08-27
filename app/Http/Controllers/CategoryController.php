@@ -12,7 +12,25 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::all();
+
+        if($category->isEmpty()){
+            return response()->json([
+                "success" => false,
+                "status" => 400,
+                "message" => "Category not found!",
+            ]);
+
+        }else{
+             return response()->json([
+                "success" => true,
+                "status" => 200,
+                "message" => "Category Added Successfully!",
+                "data" => $category,
+
+            ]);
+        }
+
     }
 
     /**
@@ -63,7 +81,22 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        
+        if (!$category) {
+            return response()->json([
+                "success" => false,
+                "status" => 404,
+                "message" => "Category not found!"
+            ]);
+        } else {
+            return response()->json([
+                "success" => true,
+                "status" => 200,
+                "message" => "Category Loaded",
+                "data" => $category
+            ]);
+        }
     }
 
     /**
